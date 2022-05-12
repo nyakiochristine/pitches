@@ -22,5 +22,25 @@ class User(UserMixin):
 
     def _repr_(self):
         return f'User {self.username}'
+    
+class Pitch():
+    
+    
+    @classmethod
+    def get_pitch(cls,id):
+        pitches = Pitch.query.filter_by(id=id).all()
+        return pitches
+    
+    @classmethod
+    def get_all_pitches(cls):
+        pitches = Pitch.query.order_by(text('-id')).all()
+        return pitches
+    
+    @classmethod
+    def get_category(cls, cat):
+        category = Pitch.query.filter_by(pitch_category = cat).order_by(text('-id')).all()
+        
+        return category        
+    
 
 

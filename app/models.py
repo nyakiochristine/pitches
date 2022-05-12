@@ -40,7 +40,29 @@ class Pitch():
     def get_category(cls, cat):
         category = Pitch.query.filter_by(pitch_category = cat).order_by(text('-id')).all()
         
-        return category        
+        return category         
+
+
+
+class Comment():
     
-
-
+    
+    @classmethod
+    def get_comments(cls,id):
+        comments= Comment
+        return comments
+    
+    
+class Upvote():
+    
+    @classmethod
+    def get_upvotes(cls,id):
+        upvote= Upvote
+        return upvote
+    
+class Downvote():
+    
+    @classmethod
+    def get_downvotes(cls,id):
+        downvote= Downvote
+        return downvote   

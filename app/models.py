@@ -2,9 +2,19 @@ import os
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from sqlalchemy import text
+import jwt
+from . import db,login_manager
 
-
-class User(UserMixin):
+class User(UserMixin,db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String)
+    hash_pass = db.Column(db.String(255))
+    email = db.Column(db.String(255),unique = True, index = True)
+    profile_pic_path = db.Column(db.String(255))
+    bio = db.Column(db.String(255))
+    
+    
     
     @property
     def password(self):
@@ -24,6 +34,11 @@ class User(UserMixin):
         return f'User {self.username}'
     
 class Pitch():
+    __tablename__ = 'pitch'
+    id = db.Column(db.Integer, primary_key = True)
+    pitch_content = db.Column(db.String())
+    pitch_category = db.Column(db.String(250))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     
     @classmethod
@@ -45,6 +60,12 @@ class Pitch():
 
 
 class Comment():
+    __tablename__ = 'comments'
+    
+    id = db.Column(db.Integer,primary_key=True)
+    comment_content = db.Column(db.String())
+    pitch_id = db.Column(db.Integer)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id')) 
     
     
     @classmethod

@@ -1,4 +1,3 @@
-from xml.dom.pulldom import ErrorHandler
 from flask import render_template
 from . import main
 

@@ -2,7 +2,7 @@
 
 ## Author
 
-[Owiti-Charles](https://github.com/nyakiochristine)
+[Nyakio-Christine](https://github.com/nyakiochristine)
 
 ## Description
 

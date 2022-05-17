@@ -5,6 +5,11 @@ from sqlalchemy import text
 import jwt
 from . import db,login_manager
 
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -14,6 +19,11 @@ class User(UserMixin,db.Model):
     profile_pic_path = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     
+    
+    pitch = db.relationship('Pitch',backref='user',lazy='dynamic')
+    comments = db.relationship('Comment',backref='user',lazy='dynamic')
+    upvotes = db.relationship('UpVote',backref='user',lazy='dynamic')
+    downvotes = db.relationship('DownVote',backref='user',lazy='dynamic')
     
     
     @property
@@ -75,15 +85,33 @@ class Comment():
     
     
 class Upvote():
+    __tablename__ = 'upvotes'
+    id = db.Column(db.Integer, primary_key = True)
+    id_user = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pitching_id = db.Column(db.Integer)
+    
+    
+    
     
     @classmethod
     def get_upvotes(cls,id):
         upvote= Upvote
         return upvote
     
+    def __repr__(self):
+        return f'{self.id_user}:{self.pitching_id}'
+    
 class Downvote():
+    __tablename__ = 'downvotes'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer,db.ForeignKey('users.id'))
+    pitching_id = db.Column(db.Integer)
     
     @classmethod
     def get_downvotes(cls,id):
         downvote= Downvote
-        return downvote   
+        return downvote  
+    def __repr__(self):
+        return f'{self.id_user}:{self.pitching_id}'
+    

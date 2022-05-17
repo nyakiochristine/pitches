@@ -1,5 +1,7 @@
 from flask import render_template
+from .. import db
 from . import main
+
 
 @main.errorhandler(404)
 def not_found(error):

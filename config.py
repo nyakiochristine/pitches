@@ -4,6 +4,7 @@ class Config:
     '''
     general configuration
     '''
+    SECRET_KEY = 'thisisme'
     
     DATABASE_PASS = os.environ.get('DATABASE_PASS')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
@@ -38,9 +39,8 @@ class DevConfig(Config):
     '''
     Development configuration child class
     '''
-    
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:nyakio@localhost/pitches'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:12345@localhost/pitches'
     
     DEBUG= True
     

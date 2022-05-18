@@ -5,11 +5,11 @@ from .forms import RegistrationForm,LoginForm,NewPasswordForm,ResetPasswordForm
 from flask_login import login_user,logout_user,current_user
 
 
-@auth.route('/login')
+@auth.route('/login',methods=['GET', 'POST'])
 def login():
-    LoginForm()
+    form= LoginForm()
     title = "PLEASE LOGIN | Your Ideas Matter!"
-    return render_template('auth/login.html',title=title)
+    return render_template('auth/login.html',title=title,form=form)
 
 @auth.route('/register')
 def register():
@@ -25,7 +25,7 @@ def reset_password():
     return render_template('auth/reset.html',title=title)
 
 @auth.route('/new password/<token>')
-def login():
+def new_password():
     LoginForm()
     title = "PLEASE LOGIN | Your Ideas Matter!"
     return render_template('auth/change_password.html',title=title)

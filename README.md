@@ -53,12 +53,12 @@ Running the application
 
  Testing the application
 
-  python3.6 manage.py test
+  python3.8 manage.py test
 Open the application on your browser `127.0.0.1:5000`.
 
 ## Technology used
 
-* [Python3.6](https://www.python.org/)
+* [Python3.8](https://www.python.org/)
 * [Flask](http://flask.pocoo.org/)
 * [Heroku](https://heroku.com)
 

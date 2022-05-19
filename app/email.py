@@ -3,6 +3,7 @@ from flask_mail import Message
 from flask import render_template
 import os
 from . import mail
+import email_validator
 
 
 def send_email(subject,sender, recipients,text_body,html_body):

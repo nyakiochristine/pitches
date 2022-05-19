@@ -2,13 +2,17 @@ from app import create_app,db
 from flask import Flask
 from flask_script import Manager,Server
 from app.models import User,Pitch, Comment
-
+from flask_migrate import MigrateCommand,Migrate
 
 #instance for creating the app
 app = create_app('production')
+migrate = Migrate(app, db)
+
 manager = Manager(app)
 
 manager.add_command('server', Server)
+#Initialize the Migrate class
+manager.add_command('db', MigrateCommand)
 
 @manager.shell
 def make_shell_context():

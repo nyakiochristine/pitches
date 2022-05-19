@@ -6,9 +6,11 @@ class Config:
     '''
     SECRET_KEY = 'thisisme'
     
-    DATABASE_PASS = os.environ.get('DATABASE_PASS')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    SQLALCHEMY_TRACK_MODIFICATIONS= True
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:12345@localhost/pitches'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+    
+    
     
     MAIL_SERVER=os.environ.get('MAIL_SERVER')
     MAIL_PORT=os.environ.get('MAIL_PORT')
@@ -33,14 +35,13 @@ class ProdConfig(Config):
     
     
     '''
+    pass
     
 class DevConfig(Config):
    
     '''
     Development configuration child class
     '''
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') 
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:12345@localhost/pitches'
     
     DEBUG= True
     

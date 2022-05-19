@@ -21,4 +21,4 @@ class TestPitch(unittest.TestCase):
     def test_check_instance_variables(self):
         self.assertEquals(self.new_pitch.pitch_content,"This is my pitch")
         self.assertEquals(self.new_pitch.pitch_category,'Technology')
-        self.assertEquals(self.new_pitch.user,self.user_kris)
+        self.assertEquals(self.new_pitch.user_id,self.user_kris)

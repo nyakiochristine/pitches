@@ -4,7 +4,8 @@ from wtforms.validators import InputRequired
 
 class PitchForm(FlaskForm):
     pitch= TextAreaField('Your Pitch')
-    my_category= SelectField('Your Category')
+    my_category= SelectField('category:', choices=[('Business', 'Business'),('Technology', 'Technology'),('Health', 'Health'),('Interview', 'Interview'),('Politics','Politics')])
+    
     submit = SubmitField('Submit')
     
 class CommentForm(FlaskForm):

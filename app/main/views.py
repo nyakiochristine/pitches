@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for,abort,flash
 from flask_login import login_required,current_user
 from . import main
 from .forms import PitchForm,UpdateProfileForm,CommentForm
-from ..import db
+from .. import db
 from ..models import User, Pitch, Comment,Upvote,Downvote
 
 
@@ -21,7 +21,7 @@ def profile(uname, id_user):
 
     get_pitches = Pitch.query.filter_by(user_id = id_user).all()
     get_comments = Comment.query.filter_by(user_id = id_user).all()
-    get_upvotes = Upvote.query.filter_by(user_id= id_user).all()
+    get_upvotes = Upvote.query.filter_by(id_user= id_user).all()
     get_downvotes = Downvote.query.filter_by(id_user = id_user).all()
     if user is None:
         abort(404)
@@ -77,7 +77,7 @@ def home():
         pitch = pitch_form.pitch.data
         cat = pitch_form.my_category.data
 
-        new_pitch = Pitch(pitch_content=pitch, pitch_category = cat, user = current_user)
+        new_pitch = Pitch(pitch_content=pitch, pitch_category = cat, user_id = current_user)
         new_pitch.save_pitch()
 
         return redirect(url_for('main.home'))
@@ -107,14 +107,45 @@ def pitch(id):
 
     all_comments = Comment.get_comments(id)
 
-    title = 'Comment | One Minute Pitch'
+    title = 'Comment '
     return render_template('pitch.html',pitch = my_pitch, comment_form = comment_form, comments = all_comments, title = title)
 
+@main.route('/category/<cat>')
+def category(cat):
+    my_category = Pitch.get_category(cat)
 
+    title = f'{cat} category | One Minute Pitch'
 
+    return render_template('category.html', title=title, category=my_category)
 
+@main.route('/user/<uname>/update', methods=['GET','POST'])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
 
-
-
-
+    if user is None:
+        abort(404)
     
+    update_form = UpdateProfileForm()
+
+    if update_form.validate_on_submit():
+        user.bio = update_form.bio.data
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname = user.username,id_user=user.id))
+    title = 'Update Bio'
+    return render_template('profile/updateprof.html', form=update_form, title = title)
+
+
+#def update_pic(uname):
+    #user = User.query.filter_by(username = uname).first()
+    #if 'photo' in request.files:
+        #filename = photos.save(request.files['photo'])
+        #path = f'photos/{filename}'
+        #user.profile_pic_path = path
+        # user_photo = PhotoProfile(pic_path = path,user = user)
+        #db.session.commit()
+    #return redirect(url_for('main.profile',uname=uname,id_user=current_user.id))
+
+

@@ -57,6 +57,10 @@ class Pitch(db.Model):
         pitches = Pitch.query.order_by(text('-id')).all()
         return pitches
     
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()
+    
     @classmethod
     def get_category(cls, cat):
         category = Pitch.query.filter_by(pitch_category = cat).order_by(text('-id')).all()
